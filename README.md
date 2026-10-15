@@ -1,5 +1,7 @@
 # Mini Bank API Test Automation
 
+![API Tests](https://github.com/gowshalya11feb-dev/playwright-api-testing/actions/workflows/api-tests.yml/badge.svg)
+
 API test automation framework built with **Playwright** and **TypeScript**, testing a small banking REST API.
 
 ## What is tested
