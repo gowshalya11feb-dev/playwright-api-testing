@@ -1,0 +1,45 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install bank server packages
+        run: npm install
+        working-directory: bank-server
+
+      - name: Start the bank server
+        working-directory: bank-server
+        run: |
+          node server.js &
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            curl -s http://localhost:3000/health && break
+            sleep 1
+          done
+
+      - name: Install test packages
+        run: npm install
+
+      - name: Run bank tests
+        run: npx playwright test bank
+
+      - name: Save the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
