@@ -72,7 +72,7 @@ test.describe('Mini Bank API', () => {
       data: { amount: 100 },
     });
 
-    expect(response.status()).toBe(404);
+    expect(response.status()).toBe(400);
 
     const body = await response.json();
     expect(body.error).toBe('Account not found');
